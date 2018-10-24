@@ -1,1 +1,15 @@
+/* Utility */
+html {
+  height: 100%;
+}
+body {
+  height: 100%;
+  margin: 0;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
 /* You can add global styles to this file, and also import other style files */
+html{
+  background-image: linear-gradient(rgb(240, 240, 252), rgb(16, 16, 92));
+}

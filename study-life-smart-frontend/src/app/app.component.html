@@ -1,17 +1,22 @@
-<div>
-  <h2>Welcome to studyLifeSmart</h2>
-  <form>
-    <table class="login">
-      <tr>
-        <td>username:</td><td><input type="text"/></td>
-        <td>password</td><td><input type="password"/></td>
-      </tr>
-    </table>
-  </form>
-  <h3>News</h3>
-  <ul>
-    <li>Development-Version</li>
-    <li>...</li>
+<div class="collapse navbar-collapse" id="mynavbar">
+  <ul class="nav navbar-nav">
+  <li>
+  <a routerLink='/' class="link">Startpage</a>
+  </li>
+  <li>
+  <a routerLink='/help' class="link">Help</a>
+  </li>
+  <li>
+  <a routerLink='/about' class="link">Über uns</a>
+  </li>
+  <li>
+  <a routerLink='/impressum' class="link">Impressum</a>
+  </li>
+  <router-outlet></router-outlet>
   </ul>
-</div>
+  </div>
+  ...
+  <div class="content">
+  <router-outlet></router-outlet>
+  </div>
 

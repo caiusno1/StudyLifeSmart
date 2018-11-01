@@ -1,3 +1,5 @@
+import { WebsocketService } from './websocket.service';
+import { ChatService } from './chat.service';
 import { AuthentificationService } from './authentification-service/authentification.service';
 import { appRouting, routingComponents } from './app.routing';
 import { BrowserModule } from '@angular/platform-browser';
@@ -17,7 +19,7 @@ import { StartpageComponent } from './startpage/startpage.component';
     HttpClientModule,
     appRouting
   ],
-  providers: [AuthentificationService],
+  providers: [AuthentificationService, WebsocketService, ChatService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

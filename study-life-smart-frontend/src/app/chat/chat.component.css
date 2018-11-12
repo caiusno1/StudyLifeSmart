@@ -1,0 +1,14 @@
+textarea {
+  resize: none;
+  overflow: auto;
+  position: relative;
+  left: 30px;
+}
+button {
+  position: relative;
+  left: 30px;
+}
+input {
+  position: relative;
+  left: 30px;
+}

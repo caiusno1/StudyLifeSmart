@@ -9,12 +9,15 @@ import { ChatService } from '../chat.service';
 export class ChatComponent implements OnInit {
 
   title = 'app';
+  text = '';
+  newMsg = '';
 
   constructor(private chat: ChatService) {
     this.chat.messages.subscribe(msg => {
+      this.text += msg.text;
       console.log(msg);
     });
-    // this.sendMessage();
+     //this.sendMessage();
   }
 
   ngOnInit() {
@@ -22,6 +25,12 @@ export class ChatComponent implements OnInit {
 
   sendMessage() {
     this.chat.sendMsg('Test Message');
+  }
+
+  onClickMe() {
+    console.log('button was clicked');
+    this.chat.sendMsg(this.newMsg);
+    this.newMsg = '';
   }
 
 }

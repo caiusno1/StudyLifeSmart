@@ -1,3 +1,13 @@
-<p>
-  chat works!
-</p>
+<div>
+  <table>
+    <tr>
+      <textarea name="msgarea" rows="8" cols="50" readonly ng-module="string" placeholder="You have no new messages :(">{{text}}</textarea>
+    </tr>
+    <tr>
+      <input type="text" [(ngModel)]="newMsg">
+    </tr>
+    <tr>
+      <button (click)="onClickMe()">Send</button>
+    </tr>
+   </table>
+</div>

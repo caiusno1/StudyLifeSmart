@@ -4,3 +4,6 @@
   border-radius: 2px;
   color: white
 }
+input[type=text]{
+  color: black
+}

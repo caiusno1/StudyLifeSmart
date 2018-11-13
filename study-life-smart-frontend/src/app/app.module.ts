@@ -17,7 +17,7 @@ import { StartpageComponent } from './startpage/startpage.component';
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
     HttpClientModule,
     appRouting
   ],

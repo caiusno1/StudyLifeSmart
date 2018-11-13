@@ -17,7 +17,7 @@ export class ChatComponent implements OnInit {
       this.text += msg.text;
       console.log(msg);
     });
-     //this.sendMessage();
+     // this.sendMessage();
   }
 
   ngOnInit() {

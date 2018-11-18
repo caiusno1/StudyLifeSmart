@@ -1,3 +1,5 @@
+import { ChatMessage } from './ChatMessage';
+import { AuthentificationService } from './../authentification-service/authentification.service';
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../chat.service';
 
@@ -12,24 +14,28 @@ export class ChatComponent implements OnInit {
   text = '';
   newMsg = '';
 
-  constructor(private chat: ChatService) {
+  constructor(private chat: ChatService, private authServ: AuthentificationService) {
     this.chat.messages.subscribe(msg => {
-      this.text += msg.text;
+      const chatmessage: ChatMessage = JSON.parse(msg);
+      if (chatmessage.author === undefined) {
+        chatmessage.author = 'unknownuser';
+      }
       console.log(msg);
+      this.text += chatmessage.author + ':' + chatmessage.text + '\n';
     });
-     // this.sendMessage();
   }
 
   ngOnInit() {
   }
 
-  sendMessage() {
-    this.chat.sendMsg('Test Message');
-  }
-
   onClickMe() {
-    console.log('button was clicked');
-    this.chat.sendMsg(this.newMsg);
+    const chatmessage: ChatMessage = new ChatMessage();
+    chatmessage.author = this.authServ.getUsername();
+    chatmessage.destination = 'default';
+    chatmessage.type =  'new-message';
+    chatmessage.text = this.newMsg;
+    console.log(chatmessage);
+    this.chat.sendMsg(chatmessage);
     this.newMsg = '';
   }
 

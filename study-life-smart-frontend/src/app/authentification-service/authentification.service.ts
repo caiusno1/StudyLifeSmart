@@ -11,11 +11,18 @@ export class AuthentificationService {
   public authenticate(user, pw): boolean {
     // ToDo http-request
     this.authenticationStatus = true;
-    this.username = 'admin';
+    this.username = user;
+    return true;
+  }
+  public logout(): boolean {
+    // ToDo http-request
+    this.authenticationStatus = false;
+    this.username = '';
     return true;
   }
   public isAuthenticated(): boolean {
-    return this.authenticationStatus;
+    this.authenticationStatus = this.username !== '';
+    return this.username !== '';
   }
   public getUsername(): string {
     if ( this.authenticationStatus ) {

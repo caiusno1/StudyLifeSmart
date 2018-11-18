@@ -23,7 +23,7 @@ io.on('connection', (socket) => {
     socket.on('message', (message) => {
         console.log("Message Received: " + message);
         socketlist.forEach(function(cur){
-            cur.emit('message', {type:'new-message', text: message});
+            cur.emit('message', message);
         });
     });
 });

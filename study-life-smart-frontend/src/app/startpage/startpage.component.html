@@ -1,10 +1,12 @@
 <div>
-  <h2>Welcome to studyLifeSmart</h2>
+  <div style="background: green" *ngIf="getauthStatus()" >Logged in<button (click)="logout()">Logout</button></div>
+  <h2>Welcome to studyLifeSmart </h2>
   <form>
     <table class="login">
       <tr>
-        <td>username:</td><td><input type="text"/></td>
-        <td>password</td><td><input type="password"/></td>
+        <td>username:</td><td><input type="text" #username/></td>
+        <td>password</td><td><input type="password" #password/></td>
+        <td><input type="button" (click)="loginAction(username.value,password.value)" value="Login"/></td>
       </tr>
     </table>
   </form>

@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthentificationService {
 
-  constructor() { }
+  constructor(private router: Router) {}
   private authenticationStatus: boolean;
   private username: string;
   public authenticate(user, pw): boolean {
@@ -22,7 +23,15 @@ export class AuthentificationService {
   }
   public isAuthenticated(): boolean {
     this.authenticationStatus = this.username !== '';
-    return this.username !== '';
+    return (this.username !== '' && this.username !== undefined );
+  }
+  public checkAuthenticationAndRedirect(): boolean {
+    if (this.isAuthenticated()) {
+      return true;
+    } else {
+      this.router.navigate(['notAuthenticated']);
+      return false;
+    }
   }
   public getUsername(): string {
     if ( this.authenticationStatus ) {

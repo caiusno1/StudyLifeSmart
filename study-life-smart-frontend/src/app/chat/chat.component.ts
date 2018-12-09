@@ -36,6 +36,9 @@ export class ChatComponent implements OnInit {
     if(this.newMsg.startsWith('join ')) {
       chatmessage.type = 'join';
       chatmessage.text = this.newMsg.substring(5, this.newMsg.length);
+    } else if(this.newMsg.startsWith('leave ')) {
+      chatmessage.type = 'leave';
+      chatmessage.text = this.newMsg.substring(6, this.newMsg.length);
     } else {
       chatmessage.type =  'new-message';
       chatmessage.text = this.newMsg;

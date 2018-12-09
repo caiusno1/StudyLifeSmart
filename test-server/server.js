@@ -8,7 +8,7 @@ io.on('connection', (socket) => {
     console.log('user connected');
     socketlist.push(socket)
 
-	socket.join('general');
+	socket.join('default');
 
     // Log whenever a client disconnects from our websocket server
     socket.on('disconnect', function(){
@@ -22,6 +22,8 @@ io.on('connection', (socket) => {
     // When we receive a 'message' event from our client, print out
     // the contents of that message and then echo it back to our client
     // using `io.emit()`
+	// the message type lets sockets join and leave channels
+	// the message destination defines to which the message will be emitted
     socket.on('message', (message) => {
         console.log("Message Received: " + message);
 		var msgObject = JSON.parse(message);
@@ -32,7 +34,7 @@ io.on('connection', (socket) => {
 			socket.leave(msgObject.text);
 			console.log('client left channel '+msgObject.text);
 		} else {
-			io.to('some channel').emit('message', message);
+			io.to(msgObject.destination).emit('message', message);
 			/*socketlist.forEach(function(cur){
 		     cur.emit('message', message);
 		 });*/

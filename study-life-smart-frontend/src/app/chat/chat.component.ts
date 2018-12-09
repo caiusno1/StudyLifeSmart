@@ -32,8 +32,14 @@ export class ChatComponent implements OnInit {
     const chatmessage: ChatMessage = new ChatMessage();
     chatmessage.author = this.authServ.getUsername();
     chatmessage.destination = 'default';
-    chatmessage.type =  'new-message';
-    chatmessage.text = this.newMsg;
+    //temp chat-commands
+    if(this.newMsg.startsWith('join ')) {
+      chatmessage.type = 'join';
+      chatmessage.text = this.newMsg.substring(5, this.newMsg.length);
+    } else {
+      chatmessage.type =  'new-message';
+      chatmessage.text = this.newMsg;
+    }
     console.log(chatmessage);
     this.chat.sendMsg(chatmessage);
     this.newMsg = '';

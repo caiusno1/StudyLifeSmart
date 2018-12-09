@@ -8,6 +8,8 @@ io.on('connection', (socket) => {
     console.log('user connected');
     socketlist.push(socket)
 
+	socket.join('general');
+
     // Log whenever a client disconnects from our websocket server
     socket.on('disconnect', function(){
         console.log('user disconnected');
@@ -22,9 +24,19 @@ io.on('connection', (socket) => {
     // using `io.emit()`
     socket.on('message', (message) => {
         console.log("Message Received: " + message);
-        socketlist.forEach(function(cur){
-            cur.emit('message', message);
-        });
+		var msgObject = JSON.parse(message);
+		if(msgObject.type == 'join') {
+			socket.join(msgObject.text);
+			console.log('client joined channel '+msgObject.text);
+		} else if(msgObject.type == 'leave') {
+			socket.leave(msgObject.text);
+			console.log('client left channel '+msgObject.text);
+		} else {
+			io.to('some channel').emit('message', message);
+			/*socketlist.forEach(function(cur){
+		     cur.emit('message', message);
+		 });*/
+		}
     });
 });
 

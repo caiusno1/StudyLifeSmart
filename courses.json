@@ -1,0 +1,9 @@
+{
+    "date":"02.12.2018",
+    "list":[
+        {"name":"Datenstrukturen & Algorithmen", "studiengang":"Informatik B.Sc"},
+        {"name":"Verteilte Systeme", "studiengang":"Informatik B.Sc"},
+        {"name":"IT-Sicherheit", "studiengang":"Informatik B.Sc"},
+        {"name":"Text-Mining", "studiengang":"Informatik B.Sc"}
+    ]
+}

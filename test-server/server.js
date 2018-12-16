@@ -8,7 +8,9 @@ io.on('connection', (socket) => {
     console.log('user connected');
     socketlist.push(socket)
 
-	socket.join('default');
+    socket.join('default');
+    socket.join('support');
+    socket.join('party');
 
     // Log whenever a client disconnects from our websocket server
     socket.on('disconnect', function(){

@@ -12,3 +12,12 @@ input {
   position: relative;
   left: 30px;
 }
+li
+{
+  float: left;
+  list-style: none;
+}
+ul{
+  overflow: auto;
+}
+

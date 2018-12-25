@@ -2,5 +2,5 @@ CC=ng
 CFLAGS=-I.
 
 frontend:
-	$(CC) build --prod
+	$(CC) build --prod --base-href StudyLifeSmart
 

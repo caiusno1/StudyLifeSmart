@@ -5,7 +5,7 @@ import { Routes, RouterModule, CanActivate } from '@angular/router';
 import { NotAuthenticatedPageComponent } from './not-authenticated-page/not-authenticated-page.component';
 import { TimeTableComponent } from './time-table/time-table.component';
 export const appRoutes: Routes = [
-{path: '', component: StartpageComponent},
+{path: '', redirectTo: '/startpage', pathMatch: 'full' },
 {path: 'startpage', component: StartpageComponent},
 {path: 'chat', component: ChatComponent,  canActivate: [AuthGuard]},
 {path: 'notAuthenticated', component: NotAuthenticatedPageComponent},

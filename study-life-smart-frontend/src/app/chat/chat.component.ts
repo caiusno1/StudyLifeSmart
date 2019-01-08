@@ -49,7 +49,7 @@ export class ChatComponent implements OnInit {
     }
   }
 
-  onClickMe() {
+  sendMsg() {
     const chatmessage: ChatMessage = new ChatMessage();
     chatmessage.author = this.authServ.getUsername();
     chatmessage.destination = 'default';
@@ -72,6 +72,9 @@ export class ChatComponent implements OnInit {
   public switch_channel(channel: Channel): void {
     this.currentchannel = channel;
     this.text = this.currentchannel.chatContent;
+  }
+  sendByKey() {
+    this.sendMsg();
   }
 
 }

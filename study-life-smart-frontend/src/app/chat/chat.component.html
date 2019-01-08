@@ -10,10 +10,10 @@
       <textarea name="msgarea" rows="8" cols="50" readonly ng-module="string" placeholder="You have no new messages :(">{{currentchannel.chatContent}}</textarea>
     </tr>
     <tr>
-      <input type="text" [(ngModel)]="newMsg">
+      <input type="text"(keyup.enter)='sendByKey()' [(ngModel)]="newMsg">
     </tr>
     <tr>
-      <button (click)="onClickMe()">Send</button>
+      <button (click)="sendMsg()">Send</button>
     </tr>
    </table>
 </div>

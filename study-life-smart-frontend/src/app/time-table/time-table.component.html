@@ -18,45 +18,45 @@
     <li>23:00</li>
     <li>00:00</li>
   </ul>
-  <ol class="week">
+  <ol class="week" *ngIf="tbl">
     <li class="day">
       <span class="name">Mon</span>
-      <div class="hour hour__09 hour--two class1">
-        <div class="title">VS</div>
-        <div>D2</div>
-      </div>
-      <div class="hour hour__11 hour--two class2">
-        <div class="title">ITM</div>
-        <div>H4</div>
-      </div>
-      <div class="hour hour__14 hour--three class3">
-        <div class="title">ITS</div>
-        <div>C1</div>
+
+      <div *ngFor="let day of tbl['Montag']" class="hour hour__{{day.starttime}} hour--{{day.length}} class1">
+          <div class="title">{{ day.title }}</div>
+          <div>{{ day.room }}</div>
       </div>
     </li>
     <li class="day">
       <span class="name">Tue</span>
+      <div *ngFor="let day of tbl['Dienstag']" class="hour hour__{{day.starttime}} hour--{{day.length}} class1">
+        <div class="title">{{ day.title }}</div>
+        <div>{{ day.room }}</div>
+      </div>
     </li>
     <li class="day">
       <span class="name">Wed</span>
-      <div class="hour hour__14 hour--two class1">
-        <div class="title">ITS HA</div>
-        <div>Gameslab</div>
+      <div *ngFor="let day of tbl['Mittwoch']" class="hour hour__{{day.starttime}} hour--{{day.length}} class1">
+        <div class="title">{{ day.title }}</div>
+        <div>{{ day.room }}</div>
       </div>
     </li>
     <li class="day">
       <span class="name">Thu</span>
-      <div class="hour hour__08 hour--three class2">
-        <div class="title">VS</div>
-        <div>D2</div>
-      </div>
-      <div class="hour hour__13 hour--three class3">
-        <div class="title">ITM</div>
-        <div>O2</div>
+      <div *ngFor="let day of tbl['Donnerstag']" class="hour hour__{{day.starttime}} hour--{{day.length}} class1">
+        <div class="title">{{ day.title }}</div>
+        <div>{{ day.room }}</div>
       </div>
     </li>
     <li class="day">
       <span class="name">Fri</span>
+      <div *ngFor="let day of tbl['Freitag']" class="hour hour__{{day.starttime}} hour--{{day.length}} class1">
+        <div class="title">{{ day.title }}</div>
+        <div>{{ day.room }}</div>
+      </div>
     </li>
   </ol>
+  <form>
+    <input type="file" (change)="importICS($event)"/>
+  </form>
 </section>

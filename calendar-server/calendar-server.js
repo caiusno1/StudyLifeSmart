@@ -1,6 +1,8 @@
 let app = require('express')();
 var bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({extended:true}));
+var cors = require('cors');
+app.use(cors());
+app.use(bodyParser.json({extended:true}));
 let http = require('http').Server(app);
 var ical2json = require("ical2json");
 let user2timetbl={}
@@ -13,6 +15,10 @@ var WEEKDAYS = {
     SAMSTAG: 6,
     SONNTAG: 0,
   };
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.split(search).join(replacement);
+};
 function parse2Date(vobjectDate){
     year=vobjectDate.substr(0,4);
     month=vobjectDate.substr(4,2);
@@ -49,6 +55,40 @@ function number2WeekDay(number){
         return undefined;
     }
 }
+function number2VerbalNumber(number){
+    switch(number){
+        case 0:
+            return "zero";
+            break;
+        case 1:
+            return "one";
+            break;
+        case 2:
+            return "two";
+            break;
+        case 3:
+            return "three";
+            break;
+        case 4:
+            return "four";
+            break;
+        case 5:
+            return "five";
+            break;
+        case 6:
+            return "six";
+            break;
+        case 7:
+            return "seven";
+            break;
+        case 8:
+            return "eight";
+            break;
+        case 9:
+            return "nine";
+            break;
+    }
+}
 function formathours(hour){
     if((hour+0)<10){
         return "0"+hour;
@@ -57,7 +97,10 @@ function formathours(hour){
     }
 }
 app.post('/registerTimeTable/:username', function (req, res) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     icalTbl = ical2json.convert(req.body.ics);
+    console.log(JSON.stringify(icalTbl));
     var i=0;
     while(i<icalTbl.VCALENDAR[0].VEVENT.length){
         var starttime= icalTbl.VCALENDAR[0].VEVENT[i]['DTSTART;TZID=CampusNetZeit'];
@@ -70,14 +113,17 @@ app.post('/registerTimeTable/:username', function (req, res) {
         if(!user2timetbl[req.params.username][number2WeekDay(starttimeDate.getDay())]){
             user2timetbl[req.params.username][number2WeekDay(starttimeDate.getDay())]=[];
         }
-        user2timetbl[req.params.username][number2WeekDay(starttimeDate.getDay())].push({"title":""+icalTbl.VCALENDAR[0].VEVENT[i]['SUMMARY'],"starttime":""+formathours(starttimeDate.getHours()), "length":""+endtimeDate.getHours()-starttimeDate.getHours()});
+        user2timetbl[req.params.username][number2WeekDay(starttimeDate.getDay())].push({"title":""+icalTbl.VCALENDAR[0].VEVENT[i]['SUMMARY'],"room":icalTbl.VCALENDAR[0].VEVENT[i]['LOCATION'],"starttime":""+formathours(starttimeDate.getHours()), "length":""+number2VerbalNumber(endtimeDate.getHours()-starttimeDate.getHours())});
         i++
     }
-    console.log(user2timetbl[req.params.username]);
+    //console.log(user2timetbl[req.params.username]);
     //todo parse for day and hours
-    res.send('Successfully saved TimeTable for user: ' + req.params.username);
+    res.send('{"message":"Successfully saved TimeTable for user: ' + req.params.username+'"}');
+    
 });
 app.get('/getTimeTable/:username',function (req, res) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.send(user2timetbl[req.params.username]);
 });
 

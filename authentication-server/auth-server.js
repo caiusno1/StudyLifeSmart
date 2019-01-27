@@ -14,7 +14,6 @@ let http = require('http').Server(app);
 
 app.post('/users/authenticate', function (req, res) {
   console.log('got a post: '+req.body.password+', '+req.body.username);
-  //todo: database connection
   db = new sqlite3.Database(dbPath, (err) => {if(err) {return console.error(err.message)}});
   var statement = db.prepare('SELECT id FROM users WHERE username = ? AND password = ?', [req.body.username, req.body.password]);
   statement.get(function(err, result) {
@@ -26,13 +25,10 @@ app.post('/users/authenticate', function (req, res) {
     } else {
       res.send(JSON.stringify('failed'));
   }});
+  //todo: register new user-function
+  //todo: track currently active users (needs http request on client logout/timeout)
+  //todo: hash passwords
 });
-
-app.get('/', function(req, res) {
-  console.log('get request');
-  res.send('Hello World!');
-});
-
 
 const port = 4000;
 app.listen(port, function() {

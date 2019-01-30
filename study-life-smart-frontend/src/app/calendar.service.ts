@@ -14,7 +14,7 @@ const httpOptions = {
 })
 export class CalendarService {
   constructor(private http: HttpClient, private authServ: AuthentificationService) { }
-  private calendarserverURL = 'http://localhost:7000';
+  private calendarserverURL = 'http://kai-biermeier.de:7000';
   public timetbl;
   loadUserSpecificCalendar() {
     this.http.get(this.calendarserverURL + '/getTimeTable/' + this.authServ.getUsername()).subscribe( (data) => {

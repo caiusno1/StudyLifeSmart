@@ -18,13 +18,13 @@ export class AuthentificationService {
   private authenticationStatus: boolean;
   private registerStatus: boolean;
   private username: string;
-  private authserverURL = 'http://localhost:4000';
+  private authserverURL = 'http://kai-biermeier.de:4000';
 
   public authenticate(user, pw): boolean {
     // ToDo http-request
-    console.log('sending POST with '+user+', '+pw+'...');
+    console.log('sending POST with ' + user + ', ' + pw + '...');
     this.http.post(this.authserverURL + '/users/authenticate', {'username':user, 'password':pw})
-    .subscribe((data)=> {if(data=='authenticated') {
+    .subscribe((data) => {if (data === 'authenticated') {
       this.authenticationStatus = true;
       this.username = user;
       console.log('authentication successful!');
@@ -33,14 +33,14 @@ export class AuthentificationService {
       console.log('authentication failed!');
       return false;
     }});
-    //console.log('authentication failed!');
+    // console.log('authentication failed!');
     return false;
   }
 
   public register(user, pw): boolean {
     console.log('sending register POST...');
     this.http.post(this.authserverURL + '/users/register', {'username':user, 'password':pw})
-    .subscribe((data) => {if(data=='registered') {
+    .subscribe((data) => {if (data === 'registered') {
       this.registerStatus = true;
       console.log('registered successfully!');
       return true;

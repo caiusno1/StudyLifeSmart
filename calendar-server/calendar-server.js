@@ -99,26 +99,35 @@ function formathours(hour){
 app.post('/registerTimeTable/:username', function (req, res) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    icalTbl = ical2json.convert(req.body.ics);
-    console.log(JSON.stringify(icalTbl));
+    // cant fix encoding bug
+    const icsbuffer = Buffer.from(req.body.ics,'utf16le')
+    const ics=icsbuffer.toString('utf16le');
+    console.log(ics);
+    icalTbl = ical2json.convert(ics);
+    JSON.stringify(icalTbl).includes('')
     var i=0;
-    while(i<icalTbl.VCALENDAR[0].VEVENT.length){
-        var starttime= icalTbl.VCALENDAR[0].VEVENT[i]['DTSTART;TZID=CampusNetZeit'];
-        var endtime= icalTbl.VCALENDAR[0].VEVENT[i]['DTEND;TZID=CampusNetZeit'];
-        if(!user2timetbl[req.params.username]){
-            user2timetbl[req.params.username]={};
+    try {
+        while(i<icalTbl.VCALENDAR[0].VEVENT.length){
+            var starttime= icalTbl.VCALENDAR[0].VEVENT[i]['DTSTART;TZID=CampusNetZeit'];
+            var endtime= icalTbl.VCALENDAR[0].VEVENT[i]['DTEND;TZID=CampusNetZeit'];
+            if(!user2timetbl[req.params.username]){
+                user2timetbl[req.params.username]={};
+            }
+            var starttimeDate=parse2Date(starttime);
+            var endtimeDate=parse2Date(endtime);
+            if(!user2timetbl[req.params.username][number2WeekDay(starttimeDate.getDay())]){
+                user2timetbl[req.params.username][number2WeekDay(starttimeDate.getDay())]=[];
+            }
+            user2timetbl[req.params.username][number2WeekDay(starttimeDate.getDay())].push({"title":""+icalTbl.VCALENDAR[0].VEVENT[i]['SUMMARY'],"room":icalTbl.VCALENDAR[0].VEVENT[i]['LOCATION'],"starttime":""+formathours(starttimeDate.getHours()), "length":""+number2VerbalNumber(endtimeDate.getHours()-starttimeDate.getHours())});
+            i++
         }
-        var starttimeDate=parse2Date(starttime);
-        var endtimeDate=parse2Date(endtime);
-        if(!user2timetbl[req.params.username][number2WeekDay(starttimeDate.getDay())]){
-            user2timetbl[req.params.username][number2WeekDay(starttimeDate.getDay())]=[];
-        }
-        user2timetbl[req.params.username][number2WeekDay(starttimeDate.getDay())].push({"title":""+icalTbl.VCALENDAR[0].VEVENT[i]['SUMMARY'],"room":icalTbl.VCALENDAR[0].VEVENT[i]['LOCATION'],"starttime":""+formathours(starttimeDate.getHours()), "length":""+number2VerbalNumber(endtimeDate.getHours()-starttimeDate.getHours())});
-        i++
+        //console.log(user2timetbl[req.params.username]);
+        //todo parse for day and hours
+        res.send('{"message":"Successfully saved TimeTable for user: ' + req.params.username+'"}');
     }
-    //console.log(user2timetbl[req.params.username]);
-    //todo parse for day and hours
-    res.send('{"message":"Successfully saved TimeTable for user: ' + req.params.username+'"}');
+    catch(ex){
+        res.send('{"message":"Operation unsuccessfull. Maybe bad encoding?"}');
+    }
     
 });
 app.get('/getTimeTable/:username',function (req, res) {

@@ -4,9 +4,16 @@
   <form class="form-inline">
     <table class="">
       <tr>
-        <td><label class="col-sm-2 col-form-label">username</label></td><td><input class="form-control" type="text" #username/></td>
-        <td><label class="col-sm-2 col-form-label">password</label></td><td><input class="form-control" type="password" #password/></td>
+        <td><label class="col-sm-2 col-form-label">Username</label></td><td><input class="form-control" type="text" #username/></td>
+        <td><label class="col-sm-2 col-form-label">Password</label></td><td><input class="form-control" type="password" #password/></td>
         <td><input type="button" class="btn btn-primary" (click)="loginAction(username.value,password.value)" value="Login"/></td>
+      </tr>
+      <tr>
+        <label></label>
+      </tr>
+      <tr>
+        <td><label>Don't have an account?</label></td>
+        <td><input type="button" class="btn btn-primary" (click)="routeToRegister()" value="Register"/></td>
       </tr>
     </table>
   </form>

@@ -1,5 +1,6 @@
 import { AuthentificationService } from './../authentification-service/authentification.service';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-startpage',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./startpage.component.css']
 })
 export class StartpageComponent implements OnInit {
-  constructor(private authServ: AuthentificationService) { }
+  constructor(private authServ: AuthentificationService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -19,5 +20,8 @@ export class StartpageComponent implements OnInit {
   }
   loginAction(username, password) {
     this.authServ.authenticate(username, password);
+  }
+  routeToRegister() {
+    this.router.navigate(['register']);
   }
 }

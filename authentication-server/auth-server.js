@@ -30,6 +30,23 @@ app.post('/users/authenticate', function (req, res) {
   //todo: hash passwords
 });
 
+app.post('/users/register', function(req, res) {
+  console.log('got a register-post: '+req.body.password+', '+req.body.username);
+  db = new sqlite3.Database(dbPath, (err) => {if(err) {return console.error(err.message)}});
+  var statement = db.prepare('SELECT id FROM users WHERE username = ?', [req.body.username]);
+  statement.get(function(err, result) {
+      if(err) {console.error(err.message);
+    }
+    if(!result) {
+      console.log(result);
+      //var statement2 = db.prepare('this is not a sqlite query (YET)', [req.body.username, req.body.password]);
+      //statement.get(function(err, result) {/*DO SOMETHING.*/}):
+      res.send(JSON.stringify('registered'));
+    } else {
+      res.send(JSON.stringify('failed'));
+  }});
+});
+
 const port = 4000;
 app.listen(port, function() {
   console.log('Example app listening on port '+port);

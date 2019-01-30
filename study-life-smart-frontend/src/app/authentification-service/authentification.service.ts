@@ -16,15 +16,14 @@ export class AuthentificationService {
 
   constructor(private http: HttpClient, private router: Router) {}
   private authenticationStatus: boolean;
+  private registerStatus: boolean;
   private username: string;
   private authserverURL = 'http://localhost:4000';
 
   public authenticate(user, pw): boolean {
     // ToDo http-request
     console.log('sending POST with '+user+', '+pw+'...');
-    var test = 'unauthenticated';
-    //this.http.get("http://localhost:4000").subscribe((data) => {console.log(data)});
-    test = this.http.post(this.authserverURL + '/users/authenticate', {'username':user, 'password':pw})
+    this.http.post(this.authserverURL + '/users/authenticate', {'username':user, 'password':pw})
     .subscribe((data)=> {if(data=='authenticated') {
       this.authenticationStatus = true;
       this.username = user;
@@ -35,6 +34,20 @@ export class AuthentificationService {
       return false;
     }});
     //console.log('authentication failed!');
+    return false;
+  }
+
+  public register(user, pw): boolean {
+    console.log('sending register POST...');
+    this.http.post(this.authserverURL + '/users/register', {'username':user, 'password':pw})
+    .subscribe((data) => {if(data=='registered') {
+      this.registerStatus = true;
+      console.log('registered successfully!');
+      return true;
+    } else {
+      console.log('register failed!');
+      return false;
+    }});
     return false;
   }
 
@@ -63,5 +76,13 @@ export class AuthentificationService {
     if ( this.authenticationStatus ) {
       return this.username;
     }
+  }
+
+  public getRegisterStatus(): boolean {
+    return this.registerStatus;
+  }
+
+  public resetRegisterStatus() {
+    this.registerStatus = false;
   }
 }

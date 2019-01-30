@@ -1,0 +1,18 @@
+<div>
+  <div class="alert alert-success" *ngIf="getRegisterStatus()" role="alert" >Register Successful<button class="btn btn-danger" (click)="routeToStart()">Login</button></div>
+  <div class="alert alert-success" *ngIf="getTryStatus() && !getRegisterStatus()" role="alert" >Username taken</div>
+  <h2>Register a new account</h2>
+  <form class="form-inline">
+    <table class="">
+      <tr>
+        <td><label class="col-sm-2 col-form-label">Username</label></td><td><input class="form-control" type="text" #username/></td>
+              </tr>
+      <tr>
+        <td><label class="col-sm-2 col-form-label">Password</label></td><td><input class="form-control" type="password" #password/></td>
+      </tr>
+      <tr>
+        <td><input type="button" class="btn btn-primary" (click)="registerAction(username.value,password.value); username.value=''; password.value='';" value="Register"/></td>
+      </tr>
+    </table>
+  </form>
+</div>

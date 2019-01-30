@@ -4,12 +4,14 @@ import { StartpageComponent } from './startpage/startpage.component';
 import { Routes, RouterModule, CanActivate } from '@angular/router';
 import { NotAuthenticatedPageComponent } from './not-authenticated-page/not-authenticated-page.component';
 import { TimeTableComponent } from './time-table/time-table.component';
+import {RegisterPageComponent} from './register-page/register-page.component';
 export const appRoutes: Routes = [
 {path: '', redirectTo: '/startpage', pathMatch: 'full' },
 {path: 'startpage', component: StartpageComponent},
 {path: 'chat', component: ChatComponent,  canActivate: [AuthGuard]},
 {path: 'notAuthenticated', component: NotAuthenticatedPageComponent},
-{path: 'timetable', component: TimeTableComponent, canActivate: [AuthGuard]}
+{path: 'timetable', component: TimeTableComponent, canActivate: [AuthGuard]},
+{path: 'register', component: RegisterPageComponent}
 ];
 export const appRouting = RouterModule.forRoot(appRoutes);
-export const routingComponents = [StartpageComponent, ChatComponent, NotAuthenticatedPageComponent, TimeTableComponent];
+export const routingComponents = [StartpageComponent, ChatComponent, NotAuthenticatedPageComponent, TimeTableComponent, RegisterPageComponent];

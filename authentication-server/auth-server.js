@@ -17,15 +17,13 @@ app.post('/users/authenticate', function (req, res) {
   db = new sqlite3.Database(dbPath, (err) => {if(err) {return console.error(err.message)}});
   var statement = db.prepare('SELECT id FROM users WHERE username = ? AND password = ?', [req.body.username, req.body.password]);
   statement.get(function(err, result) {
-      if(err) {console.error(err.message);
-    }
+    if(err) {console.error(err.message);}
     if(result) {
       console.log(result);
       res.send(JSON.stringify('authenticated'));
     } else {
       res.send(JSON.stringify('failed'));
   }});
-  //todo: register new user-function
   //todo: track currently active users (needs http request on client logout/timeout)
   //todo: hash passwords
 });
@@ -35,13 +33,16 @@ app.post('/users/register', function(req, res) {
   db = new sqlite3.Database(dbPath, (err) => {if(err) {return console.error(err.message)}});
   var statement = db.prepare('SELECT id FROM users WHERE username = ?', [req.body.username]);
   statement.get(function(err, result) {
-      if(err) {console.error(err.message);
+    if(err) {console.error(err.message);
     }
     if(!result) {
       console.log(result);
-      //var statement2 = db.prepare('this is not a sqlite query (YET)', [req.body.username, req.body.password]);
-      //statement.get(function(err, result) {/*DO SOMETHING.*/}):
-      res.send(JSON.stringify('registered'));
+      var statement2 = db.prepare('INSERT INTO users(username, password) VALUES (?, ?);', [req.body.username, req.body.password]);
+      statement2.get(function(err, result) {
+        if(err) {console.error(err.message);}
+        if(result) {console.log(result);}
+        res.send(JSON.stringify('registered'));
+      });
     } else {
       res.send(JSON.stringify('failed'));
   }});
